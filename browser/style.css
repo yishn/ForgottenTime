@@ -41,6 +41,12 @@ a, img {
         background: #121212;
 }
 
+#root {
+    position: relative;
+    margin: 5px;
+    height: calc(100% - 10px);
+}
+
 /****************************************************************/
 
 header {
@@ -52,7 +58,7 @@ header {
     header .drag {
         position: absolute;
         left: 0;
-        right: 38px;
+        right: 25px;
         top: 0;
         bottom: 0;
         -webkit-app-region: drag;
@@ -66,13 +72,30 @@ header {
         position: absolute;
         right: 0;
         top: 0;
-        width: 38px;
+        width: 25px;
         height: 25px;
+        opacity: 0;
         z-index: 100;
+        transition: opacity .5s;
+    }
+    #root:hover header .close {
+        opacity: 1;
     }
     header .close:hover {
         background: #E81123;
     }
     header .close:active {
         background: #B50D1B;
+}
+
+/****************************************************************/
+
+.radial-slider {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -58px;
+    margin-top: -58px;
+    width: 116px;
+    height: 116px;
 }
