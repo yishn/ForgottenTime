@@ -21,22 +21,33 @@ function createMaskPoints(value) {
     return points.map(v => v.join(',')).join(' ')
 }
 
-module.exports = ({value, minValue = 0, maxValue = Infinity}) => h('div', {class: 'radial-slider'},
-    h('svg', {width: 138, height: 138},
-        h('defs', {},
-            h('mask', {id: 'mask'},
-                h('polygon', {points: createMaskPoints(value), fill: 'white'})
-            )
+module.exports = function(props) {
+    let {
+        value = 0,
+        minValue = 0,
+        maxValue = Infinity,
+        onChange = () => {}
+    } = props
+
+    value = cap(minValue, maxValue, value)
+
+    return h('div', {class: 'radial-slider'},
+        h('svg', {width: 138, height: 138},
+            h('defs', {},
+                h('mask', {id: 'mask'},
+                    h('polygon', {points: createMaskPoints(value), fill: 'white'})
+                )
+            ),
+
+            h('circle', {cx: 68, cy: 68, r: 60, fill: 'rgba(40, 44, 52, .5)'}),
+            h('circle', {cx: 68, cy: 68, r: 60, fill: '#338AF4', mask: 'url(#mask)'})
         ),
 
-        h('circle', {cx: 68, cy: 68, r: 60, fill: 'rgba(40, 44, 52, .5)'}),
-        h('circle', {cx: 68, cy: 68, r: 60, fill: '#338AF4', mask: 'url(#mask)'})
-    ),
+        h('div', {
+            class: 'indicator',
+            style: {transform: `rotate(${angle(value)}deg)`}
+        }, h('span')),
 
-    h('div', {
-        class: 'indicator',
-        style: {transform: `rotate(${angle(cap(minValue, maxValue, value))}deg)`}
-    }, h('span')),
-
-    h('div', {class: 'inner'})
-)
+        h('div', {class: 'inner'})
+    )
+}
