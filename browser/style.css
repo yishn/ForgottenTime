@@ -58,9 +58,9 @@ header {
     header .drag {
         position: absolute;
         left: 0;
-        right: 25px;
         top: 0;
         bottom: 0;
+        width: 25px;
         -webkit-app-region: drag;
     }
     header .title {
@@ -72,8 +72,8 @@ header {
         position: absolute;
         right: 0;
         top: 0;
+        bottom: 0;
         width: 25px;
-        height: 25px;
         opacity: 0;
         z-index: 100;
         transition: opacity .5s;
@@ -91,11 +91,39 @@ header {
 /****************************************************************/
 
 .radial-slider {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -58px;
-    margin-top: -58px;
-    width: 116px;
-    height: 116px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -68px;
+        margin-top: -68px;
+        width: 136px;
+        height: 136px;
+        border-radius: 100%;
+    }
+    .radial-slider .indicator {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: -9px;
+        border-bottom: 14px solid #338AF4;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        transition: border-bottom-color .2s;
+    }
+    .radial-slider .indicator:hover {
+        border-bottom-color: #194BD3;
+    }
+    .radial-slider .indicator:active {
+        border-bottom-color: #0A36A8;
+    }
+    .radial-slider .inner {
+        background: #282C34;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -56px;
+        margin-top: -56px;
+        width: 112px;
+        height: 112px;
+        border-radius: 100%;
 }
