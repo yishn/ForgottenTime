@@ -10,6 +10,24 @@ class App extends Component {
         this.setState({value: 0, seconds: 0, remaining: 0, countdown: false})
     }
 
+    componentDidMount() {
+        this.timerId = setInterval(() => {
+            if (!this.state.countdown) return
+
+            if (this.state.remaining == 1)
+                this.setState({countdown: false})
+
+            this.setState({
+                remaining: this.state.remaining - 1,
+                value: (this.state.remaining - 1) / (60 * 60)
+            })
+        }, 1000)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId)
+    }
+
     render(props, state) {
         let minutes = Math.floor(state.remaining / 60)
         let endDate = new Date(Date.now() + minutes * 60 * 1000)
@@ -21,6 +39,7 @@ class App extends Component {
             h(RadialSlider, {
                 value: state.value,
                 maxValue: 16.65,
+                activated: state.countdown,
                 onInput: value => this.setState({
                     value,
                     seconds: getSeconds(value),
