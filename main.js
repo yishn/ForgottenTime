@@ -6,12 +6,13 @@ app.on('window-all-closed', () => app.quit())
 
 app.on('ready', () => {
     window = new BrowserWindow({
-        title: '',
-        width: 350,
-        height: 450,
+        title: 'ForgottenTime',
+        width: 150,
+        height: 150,
         useContentSize: true,
         backgroundColor: '#121212',
         resizable: false,
+        frame: false,
         show: false
     })
 
