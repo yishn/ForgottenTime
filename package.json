@@ -8,16 +8,16 @@
   "license": "MIT",
   "main": "main.js",
   "keywords": [
-      "timer",
-      "app",
-      "electron"
+    "timer",
+    "app",
+    "electron"
   ],
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/yishn/ForgottenTime.git"
+    "type": "git",
+    "url": "git+https://github.com/yishn/ForgottenTime.git"
   },
   "bugs": {
-      "url": "https://github.com/yishn/ForgottenTime/issues"
+    "url": "https://github.com/yishn/ForgottenTime/issues"
   },
   "build": {
     "appId": "de.yichuanshen.forgottentime",
@@ -29,5 +29,8 @@
   "devDependencies": {
     "electron": "1.4.15",
     "electron-builder": "^13.6.0"
+  },
+  "dependencies": {
+    "preact": "^7.2.0"
   }
 }
