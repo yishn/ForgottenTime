@@ -42,7 +42,7 @@ class RadialSlider extends Component {
             let {value, minValue = 0, maxValue = Infinity, onInput = () => {}} = this.props
             let {x, y} = evt
 
-            let angle = mod(Math.atan2(x - 68 - 5, -y + 68 - 5) / (2 * Math.PI))
+            let angle = mod(Math.atan2(x - 68 - 5, -y + 68 + 5) / (2 * Math.PI))
             let newValue = Math.floor(value) + angle
 
             if (Math.abs(newValue - value) > 0.3)
