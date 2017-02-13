@@ -13,14 +13,15 @@ class App extends Component {
 
     componentDidMount() {
         this.timerId = setInterval(() => {
-            let win = remote.getCurrentWindow()
             let {countdown, remaining, seconds} = this.state
+            let win = remote.getCurrentWindow()
 
-            if (!countdown || remaining <= 1) {
+            if (remaining <= 1) {
                 win.setProgressBar(0)
-                if (countdown) this.setState({remaining: 0, value: 0, countdown: false})
+                this.setState({remaining: 0, value: 0, countdown: false})
                 return
             }
+            if (!countdown) return
 
             win.setProgressBar(seconds == 0 ? 0 : remaining / seconds)
 
@@ -60,6 +61,10 @@ class App extends Component {
                     remaining: getSeconds(value),
                     value: Math.round(value * 60) / 60,
                     countdown: getSeconds(value) != 0
+                }),
+
+                onClick: () => this.setState({
+                    countdown: !this.state.countdown
                 })
             },
                 h(TimerDisplay, {

@@ -57,7 +57,7 @@ class RadialSlider extends Component {
         this.indicatorMouseDown = true
     }
 
-    render({value, minValue = 0, maxValue = Infinity, activated}) {
+    render({value, minValue = 0, maxValue = Infinity, activated, onClick = () => {}}) {
         value = cap(minValue, maxValue, value)
 
         return h('div', {class: {'radial-slider': true, activated}},
@@ -79,7 +79,7 @@ class RadialSlider extends Component {
                 h('span', {onMouseDown: this.indicatorMouseDownHandler.bind(this)})
             ),
 
-            h('div', {class: 'inner'}, this.props.children)
+            h('div', {class: 'inner', onClick}, this.props.children)
         )
     }
 }
