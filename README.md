@@ -1,2 +1,3 @@
 # ForgottenTime
-A simple Timer app for everybody.
+
+A simple timer app for everybody. This is a work in progress.
