@@ -19,8 +19,14 @@ class App extends Component {
             if (remaining <= 1) {
                 win.setProgressBar(0)
                 this.setState({remaining: 0, value: 0, countdown: false})
+
+                if (countdown) new Notification('ForgottenTime', {
+                    body: "It's time!"
+                })
+
                 return
             }
+
             if (!countdown) return
 
             win.setProgressBar(seconds == 0 ? 0 : remaining / seconds)
