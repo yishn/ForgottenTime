@@ -45,15 +45,14 @@ a, img {
 
 header {
         position: relative;
-        margin: 5px;
-        height: 29px;
-        line-height: 29px;
+        height: 25px;
+        line-height: 25px;
         text-align: center;
     }
     header .drag {
         position: absolute;
-        left: 100px;
-        right: 45px;
+        left: 0;
+        right: 38px;
         top: 0;
         bottom: 0;
         -webkit-app-region: drag;
@@ -67,8 +66,8 @@ header {
         position: absolute;
         right: 0;
         top: 0;
-        width: 45px;
-        height: 29px;
+        width: 38px;
+        height: 25px;
         z-index: 100;
     }
     header .close:hover {
@@ -76,7 +75,4 @@ header {
     }
     header .close:active {
         background: #B50D1B;
-    }
-    header .close img {
-        margin-bottom: -1px;
 }
