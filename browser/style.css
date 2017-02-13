@@ -125,7 +125,7 @@ header {
         border-bottom-color: #0A36A8;
     }
     .radial-slider .inner {
-        background: #282C34;
+        background: #282C34 radial-gradient(transparent, #282C34 90%);
         position: absolute;
         left: 50%;
         top: 50%;
@@ -134,6 +134,16 @@ header {
         width: 112px;
         height: 112px;
         border-radius: 100%;
+        box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    }
+    .radial-slider.activated .inner {
+        animation: glowing 3s infinite;
+}
+
+@keyframes glowing {
+    0% {background-color: #282C34;}
+    50% {background-color: #393D45;}
+    100% {background-color: #282C34;}
 }
 
 /****************************************************************/
