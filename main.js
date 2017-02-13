@@ -16,7 +16,7 @@ app.on('ready', () => {
         show: false
     })
 
-    // window.toggleDevTools()
+    window.toggleDevTools()
 
     window
     .on('closed', () => window = null)

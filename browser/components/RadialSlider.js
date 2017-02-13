@@ -39,16 +39,16 @@ class RadialSlider extends Component {
         document.addEventListener('mousemove', evt => {
             if (!this.indicatorMouseDown) return
 
-            let {value, minValue = 0, maxValue = Infinity, onChange = () => {}} = this.props
+            let {value, minValue = 0, maxValue = Infinity, onInput = () => {}} = this.props
             let {x, y} = evt
 
-            let angle = mod(Math.atan2(x - 68, -y + 68) / (2 * Math.PI))
+            let angle = mod(Math.atan2(x - 68 - 5, -y + 68 - 5) / (2 * Math.PI))
             let newValue = Math.floor(value) + angle
 
             if (Math.abs(newValue - value) > 0.3)
                 newValue += -Math.sign(newValue - value)
 
-            onChange(cap(minValue, maxValue, newValue))
+            onInput(cap(minValue, maxValue, newValue))
         })
     }
 
@@ -78,7 +78,7 @@ class RadialSlider extends Component {
                 onMouseDown: this.indicatorMouseDownHandler.bind(this)
             }, h('span')),
 
-            h('div', {class: 'inner'})
+            h('div', {class: 'inner'}, this.props.children)
         )
     }
 }
