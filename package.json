@@ -1,31 +1,31 @@
 {
   "name": "forgottentime",
+  "productName": "ForgottenTime",
   "version": "0.1.0",
   "description": "A simple timer app for everybody.",
-  "main": "index.js",
+  "author": "Yichuan Shen <shen.yichuan@gmail.com>",
+  "homepage": "https://github.com/yishn/ForgottenTime",
+  "license": "MIT",
+  "main": "main.js",
+  "keywords": [
+      "timer",
+      "app",
+      "electron"
+  ],
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/yishn/ForgottenTime.git"
+  },
+  "bugs": {
+      "url": "https://github.com/yishn/ForgottenTime/issues"
+  },
   "build": {
     "appId": "de.yichuanshen.forgottentime",
     "copyright": "Copyright © 2015-2017 Yichuan Shen"
   },
   "scripts": {
-    "run": "electron ./",
     "pack": "build --dir"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yishn/ForgottenTime.git"
-  },
-  "keywords": [
-    "timer",
-    "app",
-    "electron"
-  ],
-  "author": "Yichuan Shen <shen.yichuan@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/yishn/ForgottenTime/issues"
-  },
-  "homepage": "https://github.com/yishn/ForgottenTime",
   "devDependencies": {
     "electron": "1.4.15",
     "electron-builder": "^13.6.0"
