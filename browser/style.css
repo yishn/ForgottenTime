@@ -103,6 +103,14 @@ header {
     .radial-slider .indicator {
         position: absolute;
         top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 100%;
+    }
+    .radial-slider .indicator span {
+        position: absolute;
+        top: 0;
         left: 50%;
         margin-left: -9px;
         border-bottom: 14px solid #338AF4;
@@ -110,10 +118,10 @@ header {
         border-right: 9px solid transparent;
         transition: border-bottom-color .2s;
     }
-    .radial-slider .indicator:hover {
+    .radial-slider .indicator span:hover {
         border-bottom-color: #194BD3;
     }
-    .radial-slider .indicator:active {
+    .radial-slider .indicator span:active {
         border-bottom-color: #0A36A8;
     }
     .radial-slider .inner {

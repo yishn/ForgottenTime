@@ -6,7 +6,7 @@ class App extends Component {
     render() {
         return h('div', {id: 'root'},
             h(TitleBar),
-            h(RadialSlider)
+            h(RadialSlider, {value: .3})
         )
     }
 }
