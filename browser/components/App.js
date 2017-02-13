@@ -16,13 +16,11 @@ class App extends Component {
             let win = remote.getCurrentWindow()
             let {countdown, remaining, seconds} = this.state
 
-            if (!countdown || remaining <= 0) {
+            if (!countdown || remaining <= 1) {
                 win.setProgressBar(0)
+                if (countdown) this.setState({remaining: 0, value: 0, countdown: false})
                 return
             }
-
-            if (remaining == 1)
-                this.setState({countdown: false})
 
             win.setProgressBar(seconds == 0 ? 0 : remaining / seconds)
 
@@ -47,7 +45,7 @@ class App extends Component {
 
             h(RadialSlider, {
                 value: state.value,
-                maxValue: 16.65,
+                maxValue: 16.65, // 999 minutes
                 activated: state.countdown,
 
                 onInput: value => this.setState({
@@ -61,7 +59,7 @@ class App extends Component {
                     seconds: getSeconds(value),
                     remaining: getSeconds(value),
                     value: Math.round(value * 60) / 60,
-                    countdown: true
+                    countdown: getSeconds(value) != 0
                 })
             },
                 h(TimerDisplay, {
