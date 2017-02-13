@@ -21,33 +21,66 @@ function createMaskPoints(value) {
     return points.map(v => v.join(',')).join(' ')
 }
 
-module.exports = function(props) {
-    let {
-        value = 0,
-        minValue = 0,
-        maxValue = Infinity,
-        onChange = () => {}
-    } = props
+class RadialSlider extends Component {
+    constructor() {
+        super()
 
-    value = cap(minValue, maxValue, value)
+        this.indicatorMouseDown = false
 
-    return h('div', {class: 'radial-slider'},
-        h('svg', {width: 138, height: 138},
-            h('defs', {},
-                h('mask', {id: 'mask'},
-                    h('polygon', {points: createMaskPoints(value), fill: 'white'})
-                )
+        document.addEventListener('mouseup', evt => {
+            if (evt.button != 0 || !this.indicatorMouseDown) return
+
+            let {value, onSet = () => {}} = this.props
+
+            this.indicatorMouseDown = false
+            onSet(value)
+        })
+
+        document.addEventListener('mousemove', evt => {
+            if (!this.indicatorMouseDown) return
+
+            let {value, minValue = 0, maxValue = Infinity, onChange = () => {}} = this.props
+            let {x, y} = evt
+
+            let angle = mod(Math.atan2(x - 68, -y + 68) / (2 * Math.PI))
+            let newValue = Math.floor(value) + angle
+
+            if (Math.abs(newValue - value) > 0.3)
+                newValue += -Math.sign(newValue - value)
+
+            onChange(cap(minValue, maxValue, newValue))
+        })
+    }
+
+    indicatorMouseDownHandler(evt) {
+        if (evt.button != 0) return
+        this.indicatorMouseDown = true
+    }
+
+    render({value, minValue = 0, maxValue = Infinity}) {
+        value = cap(minValue, maxValue, value)
+
+        return h('div', {class: 'radial-slider'},
+            h('svg', {width: 138, height: 138},
+                h('defs', {},
+                    h('mask', {id: 'mask'},
+                        h('polygon', {points: createMaskPoints(value), fill: 'white'})
+                    )
+                ),
+
+                h('circle', {cx: 68, cy: 68, r: 60, fill: 'rgba(40, 44, 52, .5)'}),
+                h('circle', {cx: 68, cy: 68, r: 60, fill: '#338AF4', mask: 'url(#mask)'})
             ),
 
-            h('circle', {cx: 68, cy: 68, r: 60, fill: 'rgba(40, 44, 52, .5)'}),
-            h('circle', {cx: 68, cy: 68, r: 60, fill: '#338AF4', mask: 'url(#mask)'})
-        ),
+            h('div', {
+                class: 'indicator',
+                style: {transform: `rotate(${angle(value)}deg)`},
+                onMouseDown: this.indicatorMouseDownHandler.bind(this)
+            }, h('span')),
 
-        h('div', {
-            class: 'indicator',
-            style: {transform: `rotate(${angle(value)}deg)`}
-        }, h('span')),
-
-        h('div', {class: 'inner'})
-    )
+            h('div', {class: 'inner'})
+        )
+    }
 }
+
+module.exports = RadialSlider

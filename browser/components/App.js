@@ -5,6 +5,7 @@ const RadialSlider = require('./RadialSlider')
 class App extends Component {
     constructor() {
         super()
+        
         this.setState({value: 0.3})
     }
 
