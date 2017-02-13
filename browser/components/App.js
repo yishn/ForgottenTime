@@ -1,18 +1,10 @@
-const {remote} = require('electron')
 const {h, Component} = require('preact')
+const TitleBar = require('./TitleBar')
 
 class App extends Component {
     render() {
-        return h('header', {},
-            h('span', {class: 'drag'}),
-            h('span', {class: 'close', onClick: () => remote.getCurrentWindow().close()},
-                h('img', {
-                    src: 'img/close.svg',
-                    width: 10,
-                    height: 10,
-                    title: 'Close'
-                })
-            )
+        return h('div', {id: 'root'},
+            h(TitleBar)
         )
     }
 }
