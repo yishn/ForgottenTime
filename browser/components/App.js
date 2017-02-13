@@ -1,3 +1,4 @@
+const {remote} = require('electron')
 const {h, Component} = require('preact')
 const TitleBar = require('./TitleBar')
 const RadialSlider = require('./RadialSlider')
@@ -12,14 +13,22 @@ class App extends Component {
 
     componentDidMount() {
         this.timerId = setInterval(() => {
-            if (!this.state.countdown) return
+            let win = remote.getCurrentWindow()
+            let {countdown, remaining, seconds} = this.state
 
-            if (this.state.remaining == 1)
+            if (!countdown || remaining <= 0) {
+                win.setProgressBar(0)
+                return
+            }
+
+            if (remaining == 1)
                 this.setState({countdown: false})
 
+            win.setProgressBar(seconds == 0 ? 0 : remaining / seconds)
+
             this.setState({
-                remaining: this.state.remaining - 1,
-                value: (this.state.remaining - 1) / (60 * 60)
+                remaining: remaining - 1,
+                value: (remaining - 1) / (60 * 60)
             })
         }, 1000)
     }
@@ -30,7 +39,7 @@ class App extends Component {
 
     render(props, state) {
         let minutes = Math.floor(state.remaining / 60)
-        let endDate = new Date(Date.now() + minutes * 60 * 1000)
+        let endDate = new Date(Date.now() + state.remaining * 1000)
         let getSeconds = value => Math.round(value * 60) * 60
 
         return h('div', {id: 'root'},
@@ -40,12 +49,14 @@ class App extends Component {
                 value: state.value,
                 maxValue: 16.65,
                 activated: state.countdown,
+
                 onInput: value => this.setState({
                     value,
                     seconds: getSeconds(value),
                     remaining: getSeconds(value),
                     countdown: false
                 }),
+
                 onSet: value => this.setState({
                     seconds: getSeconds(value),
                     remaining: getSeconds(value),

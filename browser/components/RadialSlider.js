@@ -6,7 +6,7 @@ let angle = value => mod(value) * 360
 let radians = value => mod(value) * 2 * Math.PI
 
 function createMaskPoints(value) {
-    if (value <= 0) return ''
+    if (value <= 0.01) return ''
 
     let corners = [[0, 0], [0, 138], [138, 138], [138, 0]]
     if (value >= 1) return corners.map(v => v.join(',')).join(' ')
