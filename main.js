@@ -20,7 +20,6 @@ app.on('ready', () => {
 
     window
     .on('closed', () => window = null)
-    .once('ready-to-show', () => window.show())
     .webContents
     .on('new-window', evt => evt.preventDefault())
 

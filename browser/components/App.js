@@ -39,6 +39,8 @@ class App extends Component {
         .on('menu-close', () => this.window.close())
         .on('menu-toggle-alwaysontop', () => this.setState(prevState => ({alwaysOnTop: !prevState.alwaysOnTop})))
 
+        this.window.show()
+
         setInterval(() => {
             let {countdown, remaining, seconds} = this.state
 

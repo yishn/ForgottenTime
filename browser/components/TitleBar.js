@@ -23,7 +23,6 @@ class TitleBar extends Component {
 
         document.addEventListener('mouseup', evt => {
             if (evt.button != 2) return
-            if (evt.target.tagName != 'svg') return
 
             let template = this.props.children.map(x => x.attributes)
             ipcRenderer.send('show-context-menu', template, this.window)
