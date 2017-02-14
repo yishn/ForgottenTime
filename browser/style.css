@@ -164,12 +164,15 @@ header {
         display: block;
         font-size: 2.3em;
         line-height: 1.1;
+        text-shadow: 0 0 3px rgba(255, 255, 255, .3);
     }
     .timer-display .time {
         color: rgb(209, 129, 70);
+        text-shadow: 0 0 3px rgba(209, 129, 70, .3);
     }
     .timer-display .seconds {
         opacity: .8;
+        text-shadow: 0 0 3px rgba(255, 255, 255, .3);
     }
     .timer-display .minutes span, .timer-display .seconds span {
         visibility: hidden;
@@ -182,13 +185,13 @@ header {
 }
 
 @keyframes glowing-text {
-    0% {text-shadow: none;}
+    0% {text-shadow: 0 0 3px rgba(255, 255, 255, .3);}
     50% {text-shadow: 0 0 5px rgba(255, 255, 255, .3);}
-    100% {text-shadow: none;}
+    100% {text-shadow: 0 0 3px rgba(255, 255, 255, .3);}
 }
 
 @keyframes glowing-red-text {
-    0% {text-shadow: none;}
+    0% {text-shadow: 0 0 3px rgba(209, 129, 70, .3);}
     50% {text-shadow: 0 0 5px rgba(209, 129, 70, .3);}
-    100% {text-shadow: none;}
+    100% {text-shadow: 0 0 3px rgba(209, 129, 70, .3);}
 }

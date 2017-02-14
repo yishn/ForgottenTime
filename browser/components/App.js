@@ -61,7 +61,7 @@ class App extends Component {
         clearInterval(this.timerId)
     }
 
-    render(props, state) {
+    render(_, state) {
         let minutes = Math.floor(state.remaining / 60)
         let endDate = new Date(Date.now() + state.remaining * 1000)
         let getSeconds = value => Math.round(value * 60) * 60
