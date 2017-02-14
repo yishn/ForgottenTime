@@ -11,6 +11,10 @@ class App extends Component {
         this.setState({value: 0, seconds: 0, remaining: 0, countdown: false})
     }
 
+    countdownEnded() {
+        new Notification('ForgottenTime', {body: "It's time!"})
+    }
+
     componentDidMount() {
         this.timerId = setInterval(() => {
             let {countdown, remaining, seconds} = this.state
@@ -20,10 +24,7 @@ class App extends Component {
                 win.setProgressBar(0)
                 this.setState({remaining: 0, value: 0, countdown: false})
 
-                if (countdown) new Notification('ForgottenTime', {
-                    body: "It's time!"
-                })
-
+                if (countdown) this.countdownEnded()
                 return
             }
 
