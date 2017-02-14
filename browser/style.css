@@ -166,7 +166,7 @@ header {
         line-height: 1.1;
     }
     .timer-display .time {
-        color: #E05848;
+        color: rgb(209, 129, 70);
     }
     .timer-display .seconds {
         opacity: .8;
@@ -189,6 +189,6 @@ header {
 
 @keyframes glowing-red-text {
     0% {text-shadow: none;}
-    50% {text-shadow: 0 0 5px rgba(224, 88, 72, .3);}
+    50% {text-shadow: 0 0 5px rgba(209, 129, 70, .3);}
     100% {text-shadow: none;}
 }
