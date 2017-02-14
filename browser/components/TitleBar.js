@@ -1,4 +1,4 @@
-const {remote} = require('electron')
+const {remote, ipcRenderer} = require('electron')
 const {Menu} = require('electron').remote
 const {h, Component} = require('preact')
 
@@ -25,8 +25,8 @@ class TitleBar extends Component {
             if (evt.button != 2) return
             if (evt.target.tagName != 'svg') return
 
-            let menu = Menu.buildFromTemplate(this.props.children.map(x => x.attributes))
-            menu.popup()
+            let template = this.props.children.map(x => x.attributes)
+            ipcRenderer.send('show-context-menu', template, this.window)
         })
 
         document.addEventListener('mousemove', evt => {

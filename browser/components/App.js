@@ -1,4 +1,4 @@
-const {remote} = require('electron')
+const {remote, ipcRenderer} = require('electron')
 const {h, Component} = require('preact')
 
 const MenuItem = Component
@@ -35,7 +35,11 @@ class App extends Component {
             alwaysOnTop: localStorage.alwaysOnTop == 'true'
         })
 
-        this.timerId = setInterval(() => {
+        ipcRenderer
+        .on('menu-close', () => this.window.close())
+        .on('menu-toggle-alwaysontop', () => this.setState(prevState => ({alwaysOnTop: !prevState.alwaysOnTop})))
+
+        setInterval(() => {
             let {countdown, remaining, seconds} = this.state
 
             if (remaining <= 1) {
@@ -57,10 +61,6 @@ class App extends Component {
         }, 1000)
     }
 
-    componentWillUnmount() {
-        clearInterval(this.timerId)
-    }
-
     render(_, state) {
         let minutes = Math.floor(state.remaining / 60)
         let endDate = new Date(Date.now() + state.remaining * 1000)
@@ -72,11 +72,11 @@ class App extends Component {
                     label: 'Always On Top',
                     type: 'checkbox',
                     checked: state.alwaysOnTop,
-                    click: () => this.setState({alwaysOnTop: !state.alwaysOnTop})
+                    action: 'toggle-alwaysontop'
                 }),
                 h(MenuItem, {
                     label: 'Close',
-                    click: () => this.window.close()
+                    action: 'close'
                 })
             ),
 
