@@ -6,24 +6,24 @@ class TitleBar extends Component {
         super()
 
         this.window = remote.getCurrentWindow()
-        this.windowMouseDownPosition = null
+        this.mouseDownPos = null
 
         document.addEventListener('mousedown', evt => {
             if (evt.button != 0) return
             if (evt.target.tagName != 'svg') return
 
-            this.windowMouseDownPosition = [evt.x, evt.y]
+            this.mouseDownPos = [evt.x, evt.y]
         })
 
         document.addEventListener('mouseup', evt => {
             if (evt.button != 0) return
-            this.windowMouseDownPosition = null
+            this.mouseDownPos = null
         })
 
         document.addEventListener('mousemove', evt => {
-            if (!this.windowMouseDownPosition) return
+            if (!this.mouseDownPos) return
 
-            let [dx, dy] = this.windowMouseDownPosition.map((t, i) => evt[['x', 'y'][i]] - t)
+            let [dx, dy] = this.mouseDownPos.map((t, i) => evt[['x', 'y'][i]] - t)
             let [x, y] = this.window.getPosition()
 
             this.window.setPosition(x + dx, y + dy)
