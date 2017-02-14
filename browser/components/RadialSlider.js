@@ -36,12 +36,10 @@ class RadialSlider extends Component {
             onSet(value)
         })
 
-        document.addEventListener('mousemove', evt => {
+        document.addEventListener('mousemove', ({x, y}) => {
             if (!this.indicatorMouseDown) return
 
             let {value, minValue = 0, maxValue = Infinity, onInput = () => {}} = this.props
-            let {x, y} = evt
-
             let angle = mod(Math.atan2(x - 68 - 5, -y + 68 + 5) / (2 * Math.PI))
             let newValue = Math.floor(value) + angle
 
