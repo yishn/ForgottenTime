@@ -1,6 +1,6 @@
 const {h, Component} = require('preact')
 
-let padZero = (n, x) => [...Array(Math.max(0, n - ('' + x).length))].map(x => '0').join('') + x
+let padZero = (n, x) => Array(Math.max(0, n - ('' + x).length)).fill(0).join('') + x
 
 class TimerDisplay extends Component {
     render({time, minutes, seconds}) {
