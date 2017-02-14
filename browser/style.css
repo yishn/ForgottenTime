@@ -176,22 +176,4 @@ header {
     }
     .timer-display .minutes span, .timer-display .seconds span {
         visibility: hidden;
-    }
-    .radial-slider.activated .timer-display {
-        animation: glowing-text 3s infinite;
-    }
-    .radial-slider.activated .timer-display .time {
-        animation: glowing-red-text 3s infinite;
-}
-
-@keyframes glowing-text {
-    0% {text-shadow: 0 0 3px rgba(255, 255, 255, .3);}
-    50% {text-shadow: 0 0 5px rgba(255, 255, 255, .3);}
-    100% {text-shadow: 0 0 3px rgba(255, 255, 255, .3);}
-}
-
-@keyframes glowing-red-text {
-    0% {text-shadow: 0 0 3px rgba(209, 129, 70, .3);}
-    50% {text-shadow: 0 0 5px rgba(209, 129, 70, .3);}
-    100% {text-shadow: 0 0 3px rgba(209, 129, 70, .3);}
 }
