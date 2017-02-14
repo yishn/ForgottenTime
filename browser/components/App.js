@@ -27,9 +27,14 @@ class App extends Component {
 
     componentWillUpdate(_, nextState) {
         this.window.setAlwaysOnTop(nextState.alwaysOnTop)
+        localStorage.alwaysOnTop = nextState.alwaysOnTop
     }
 
     componentDidMount() {
+        this.setState({
+            alwaysOnTop: localStorage.alwaysOnTop == 'true'
+        })
+
         this.timerId = setInterval(() => {
             let {countdown, remaining, seconds} = this.state
 
