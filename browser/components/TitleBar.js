@@ -1,4 +1,5 @@
 const {remote} = require('electron')
+const {Menu} = require('electron').remote
 const {h, Component} = require('preact')
 
 class TitleBar extends Component {
@@ -18,6 +19,14 @@ class TitleBar extends Component {
         document.addEventListener('mouseup', evt => {
             if (evt.button != 0) return
             this.mouseDownPos = null
+        })
+
+        document.addEventListener('mouseup', evt => {
+            if (evt.button != 2) return
+            if (evt.target.tagName != 'svg') return
+
+            let menu = Menu.buildFromTemplate(this.props.children.map(x => x.attributes))
+            menu.popup()
         })
 
         document.addEventListener('mousemove', evt => {

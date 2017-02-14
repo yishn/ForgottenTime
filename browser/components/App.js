@@ -1,5 +1,7 @@
 const {remote} = require('electron')
 const {h, Component} = require('preact')
+
+const MenuItem = Component
 const TitleBar = require('./TitleBar')
 const RadialSlider = require('./RadialSlider')
 const TimerDisplay = require('./TimerDisplay')
@@ -8,20 +10,31 @@ class App extends Component {
     constructor() {
         super()
 
-        this.setState({value: 0, seconds: 0, remaining: 0, countdown: false})
+        this.window = remote.getCurrentWindow()
+
+        this.state = {
+            value: 0,
+            seconds: 0,
+            remaining: 0,
+            countdown: false,
+            alwaysOnTop: false
+        }
     }
 
     countdownEnded() {
         new Notification('ForgottenTime', {body: "It's time!"})
     }
 
+    componentWillUpdate(_, nextState) {
+        this.window.setAlwaysOnTop(nextState.alwaysOnTop)
+    }
+
     componentDidMount() {
         this.timerId = setInterval(() => {
             let {countdown, remaining, seconds} = this.state
-            let win = remote.getCurrentWindow()
 
             if (remaining <= 1) {
-                win.setProgressBar(0)
+                this.window.setProgressBar(0)
                 this.setState({remaining: 0, value: 0, countdown: false})
 
                 if (countdown) this.countdownEnded()
@@ -30,7 +43,7 @@ class App extends Component {
 
             if (!countdown) return
 
-            win.setProgressBar(seconds == 0 ? 0 : remaining / seconds)
+            this.window.setProgressBar(seconds == 0 ? 0 : remaining / seconds)
 
             this.setState({
                 remaining: remaining - 1,
@@ -49,7 +62,18 @@ class App extends Component {
         let getSeconds = value => Math.round(value * 60) * 60
 
         return h('div', {id: 'root'},
-            h(TitleBar),
+            h(TitleBar, {},
+                h(MenuItem, {
+                    label: 'Always On Top',
+                    type: 'checkbox',
+                    checked: state.alwaysOnTop,
+                    click: () => this.setState({alwaysOnTop: !state.alwaysOnTop})
+                }),
+                h(MenuItem, {
+                    label: 'Close',
+                    click: () => this.window.close()
+                })
+            ),
 
             h(RadialSlider, {
                 value: state.value,

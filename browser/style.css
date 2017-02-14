@@ -134,7 +134,7 @@ header {
         width: 112px;
         height: 112px;
         border-radius: 100%;
-        box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+        box-shadow: 0 0 10px rgba(0, 0, 0, .3);
     }
     .radial-slider.activated .inner {
         animation: glowing 3s infinite;
