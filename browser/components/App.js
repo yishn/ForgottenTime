@@ -24,10 +24,31 @@ class App extends Component {
     countdownEnded() {
         new Notification('ForgottenTime', {body: "It's time!"})
 
-        this.setState(prevState => ({
-            value: prevState.seconds / (60 * 60),
-            remaining: prevState.seconds
-        }))
+        this.animateTimer(this.state.seconds)
+    }
+
+    animateTimer(to, duration = 1000, fps = 60) {
+        let from = this.state.remaining
+        let diff = to - from
+        let fpms = fps / 1000
+        let n = Math.round(duration * fpms)
+        let i = 0
+
+        this.setState({seconds: to})
+
+        let updateFrame = () => {
+            let seconds = Math.round(from + i * diff / n)
+
+            this.setState({
+                value: seconds / (60 * 60),
+                remaining: seconds
+            })
+
+            i++
+            if (i <= n) setTimeout(updateFrame, Math.round(1 / fpms))
+        }
+
+        updateFrame()
     }
 
     componentWillUpdate(_, nextState) {
