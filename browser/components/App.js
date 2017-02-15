@@ -23,6 +23,11 @@ class App extends Component {
 
     countdownEnded() {
         new Notification('ForgottenTime', {body: "It's time!"})
+
+        this.setState(prevState => ({
+            value: prevState.seconds / (60 * 60),
+            remaining: prevState.seconds
+        }))
     }
 
     componentWillUpdate(_, nextState) {
