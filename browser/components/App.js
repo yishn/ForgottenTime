@@ -27,9 +27,10 @@ class App extends Component {
         this.animateTimer(this.state.seconds)
     }
 
-    animateTimer(to, duration = 1000, fps = 60) {
+    animateTimer(to, duration = 1000, fps = 60, easing = null) {
+        if (!easing) easing = t => 0.5 * Math.sin((t - 0.5) * Math.PI) + 1
+
         let from = this.state.remaining
-        let diff = to - from
         let fpms = fps / 1000
         let n = Math.round(duration * fpms)
         let i = 0
@@ -37,15 +38,14 @@ class App extends Component {
         this.setState({seconds: to})
 
         let updateFrame = () => {
-            let seconds = Math.round(from + i * diff / n)
+            let seconds = Math.round(from + easing(i / n) * (to - from))
 
             this.setState({
                 value: seconds / (60 * 60),
                 remaining: seconds
             })
 
-            i++
-            if (i <= n) setTimeout(updateFrame, Math.round(1 / fpms))
+            if (++i <= n) setTimeout(updateFrame, Math.round(1 / fpms))
         }
 
         updateFrame()
