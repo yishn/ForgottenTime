@@ -27,7 +27,7 @@ class App extends Component {
         this.animateTimer(this.state.seconds)
     }
 
-    animateTimer(to, duration = 1000, fps = 60, easing = null) {
+    animateTimer(to, duration = 700, fps = 60, easing = null) {
         if (!easing) easing = t => 0.5 * Math.sin((t - 0.5) * Math.PI) + 0.5
 
         let from = this.state.remaining
