@@ -28,7 +28,7 @@ class App extends Component {
     }
 
     animateTimer(to, duration = 1000, fps = 60, easing = null) {
-        if (!easing) easing = t => 0.5 * Math.sin((t - 0.5) * Math.PI) + 1
+        if (!easing) easing = t => 0.5 * Math.sin((t - 0.5) * Math.PI) + 0.5
 
         let from = this.state.remaining
         let fpms = fps / 1000
