@@ -63,7 +63,7 @@ class App extends Component {
 
         ipcRenderer
         .on('menu-close', () => this.window.close())
-        .on('menu-toggle-alwaysontop', () => this.setState(prevState => ({alwaysOnTop: !prevState.alwaysOnTop})))
+        .on('menu-toggle-alwaysontop', () => this.setState(prev => ({alwaysOnTop: !prev.alwaysOnTop})))
 
         this.window.show()
 
