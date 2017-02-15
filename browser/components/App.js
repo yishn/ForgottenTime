@@ -61,6 +61,8 @@ class App extends Component {
             alwaysOnTop: localStorage.alwaysOnTop == 'true'
         })
 
+        this.animateTimer(+localStorage.seconds)
+
         ipcRenderer
         .on('menu-close', () => this.window.close())
         .on('menu-toggle-alwaysontop', () => this.setState(prev => ({alwaysOnTop: !prev.alwaysOnTop})))
@@ -120,12 +122,18 @@ class App extends Component {
                     countdown: false
                 }),
 
-                onSet: value => this.setState({
-                    seconds: getSeconds(value),
-                    remaining: getSeconds(value),
-                    value: Math.round(value * 60) / 60,
-                    countdown: getSeconds(value) != 0
-                }),
+                onSet: value => {
+                    let seconds = getSeconds(value)
+
+                    this.setState({
+                        seconds,
+                        remaining: seconds,
+                        value: Math.round(value * 60) / 60,
+                        countdown: seconds != 0
+                    })
+
+                    localStorage.seconds = seconds
+                },
 
                 onClick: () => this.setState({
                     countdown: !this.state.countdown
