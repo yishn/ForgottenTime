@@ -18,14 +18,6 @@ class App extends Component {
             localStorage.windowLeft = x
             localStorage.windowTop = y
         })
-
-        this.state = {
-            value: 0,
-            seconds: 0,
-            remaining: 0,
-            countdown: false,
-            alwaysOnTop: false
-        }
     }
 
     countdownEnded() {
@@ -65,6 +57,10 @@ class App extends Component {
 
     componentDidMount() {
         this.setState({
+            value: 0,
+            seconds: 0,
+            remaining: 0,
+            countdown: false,
             alwaysOnTop: localStorage.alwaysOnTop == 'true'
         })
 
