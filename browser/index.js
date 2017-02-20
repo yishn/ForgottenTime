@@ -1,9 +1,17 @@
+const electron = require('electron')
 const {h, render} = require('preact')
 const App = require('./components/App')
 
-if (localStorage.alwaysOnTop == null)
-    localStorage.alwaysOnTop = true
-if (localStorage.seconds == null)
-    localStorage.seconds = 0
+let setDefaultSetting = (name, value) => {
+    if (localStorage[name] == null)
+        localStorage[name] = value
+}
+
+let {workAreaSize} = electron.screen.getPrimaryDisplay()
+
+setDefaultSetting('alwaysOnTop', true)
+setDefaultSetting('seconds', 0)
+setDefaultSetting('windowLeft', Math.round(workAreaSize.width / 2) - 75)
+setDefaultSetting('windowTop', Math.round(workAreaSize.height / 2) - 75)
 
 render(h(App), document.body)

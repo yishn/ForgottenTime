@@ -12,6 +12,13 @@ class App extends Component {
 
         this.window = remote.getCurrentWindow()
 
+        this.window.on('move', () => {
+            let [x, y] = this.window.getPosition()
+
+            localStorage.windowLeft = x
+            localStorage.windowTop = y
+        })
+
         this.state = {
             value: 0,
             seconds: 0,
@@ -61,12 +68,12 @@ class App extends Component {
             alwaysOnTop: localStorage.alwaysOnTop == 'true'
         })
 
-        this.animateTimer(+localStorage.seconds)
-
         ipcRenderer
         .on('menu-close', () => this.window.close())
         .on('menu-toggle-alwaysontop', () => this.setState(prev => ({alwaysOnTop: !prev.alwaysOnTop})))
 
+        this.animateTimer(+localStorage.seconds)
+        this.window.setPosition(+localStorage.windowLeft, +localStorage.windowTop)
         this.window.show()
 
         setInterval(() => {
