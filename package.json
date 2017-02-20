@@ -21,7 +21,7 @@
   },
   "build": {
     "appId": "de.yichuanshen.forgottentime",
-    "copyright": "Copyright © 2015-2017 Yichuan Shen"
+    "copyright": "Copyright © 2017 Yichuan Shen"
   },
   "scripts": {
     "pack": "build --dir"
