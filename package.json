@@ -21,10 +21,19 @@
   },
   "build": {
     "appId": "de.yichuanshen.forgottentime",
-    "copyright": "Copyright © 2017 Yichuan Shen"
+    "compression": "maximum",
+    "win": {
+        "target": ["7z"]
+    },
+    "linux": {
+        "category": "Utility",
+        "target": ["tar.xz"]
+    }
   },
   "scripts": {
-    "pack": "build --dir"
+    "pack": "build --dir",
+    "dist:win": "build -w --ia32 --x64",
+    "dist:linux": "build -l --ia32 --x64"
   },
   "devDependencies": {
     "electron": "1.4.15",
