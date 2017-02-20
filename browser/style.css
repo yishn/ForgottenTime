@@ -158,13 +158,13 @@ header {
         margin-top: -40px;
         list-style: none;
         text-align: center;
+        text-shadow: 0 0 3px rgba(255, 255, 255, .3);
         pointer-events: none;
     }
     .timer-display .minutes {
         display: block;
         font-size: 2.3em;
         line-height: 1.1;
-        text-shadow: 0 0 3px rgba(255, 255, 255, .3);
     }
     .timer-display .time {
         color: rgb(209, 129, 70);
@@ -172,7 +172,6 @@ header {
     }
     .timer-display .seconds {
         opacity: .8;
-        text-shadow: 0 0 3px rgba(255, 255, 255, .3);
     }
     .timer-display .minutes span, .timer-display .seconds span {
         visibility: hidden;
