@@ -22,8 +22,11 @@
   "build": {
     "appId": "de.yichuanshen.forgottentime",
     "compression": "maximum",
-    "win": {
-        "target": ["7z"]
+    "nsis": {
+        "oneClick": false,
+        "perMachine": true,
+        "allowToChangeInstallationDirectory": true,
+        "artifactName": "${productName} v${version} Setup.${ext}"
     },
     "linux": {
         "category": "Utility",
@@ -32,7 +35,7 @@
   },
   "scripts": {
     "pack": "build --dir",
-    "dist:win": "build -w --ia32 --x64",
+    "dist:win": "build -w --ia32",
     "dist:linux": "build -l --ia32 --x64"
   },
   "devDependencies": {
