@@ -21,7 +21,6 @@
   },
   "build": {
     "appId": "de.yichuanshen.forgottentime",
-    "compression": "maximum",
     "nsis": {
         "oneClick": false,
         "perMachine": true,
@@ -29,8 +28,7 @@
         "artifactName": "forgottentime-v${version}-win-setup.${ext}"
     },
     "linux": {
-        "category": "Utility",
-        "target": ["tar.xz"]
+        "category": "Utility"
     }
   },
   "scripts": {
