@@ -21,6 +21,7 @@
   },
   "build": {
     "appId": "de.yichuanshen.forgottentime",
+    "compression": "maximum",
     "nsis": {
         "oneClick": false,
         "perMachine": true,
