@@ -4,6 +4,8 @@ A simple timer app for everybody. [Download the latest release here.](https://gi
 
 ![Screenshot](screenshot.png)
 
+This project is inspired by the wonderful [Minutes widget](http://minutes.en.softonic.com/mac) from Nitram-nunca.
+
 ## Building
 
 Building ForgottenTime requires [Node.js](https://nodejs.org/en/download/) and npm. First, clone this repository:
