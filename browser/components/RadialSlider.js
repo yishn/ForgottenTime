@@ -11,13 +11,12 @@ function createMaskPoints(value) {
     let corners = [[0, 0], [0, 138], [138, 138], [138, 0]]
     if (value >= 1) return corners.map(v => v.join(',')).join(' ')
 
-    let points = [[68, 0], [68, 68]]
     let v = [Math.sin, x => -Math.cos(x)].map(f => 68 + f(radians(cap(0, 1, value))) * 68)
 
     let distance = ([a, b], [c, d]) => Math.pow(a - c, 2) + Math.pow(b - d, 2)
     let minIndex = corners.findIndex(w => corners.every(w2 => distance(w, v) <= distance(w2, v)))
 
-    points.push(v, ...corners.slice(minIndex), [68, 0])
+    let points = [[68, 0], [68, 68], v, ...corners.slice(minIndex), [68, 0]]
     return points.map(v => v.join(',')).join(' ')
 }
 

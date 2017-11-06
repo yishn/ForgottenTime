@@ -12,11 +12,38 @@ class App extends Component {
 
         this.window = remote.getCurrentWindow()
 
-        this.window.on('move', () => {
-            let [x, y] = this.window.getPosition()
+        this.state = {
+            value: 0,
+            seconds: 0,
+            remaining: 0,
+            countdown: false,
+            alwaysOnTop: localStorage.alwaysOnTop == 'true'
+        }
 
-            localStorage.windowLeft = x
-            localStorage.windowTop = y
+        let getSeconds = value => Math.round(value * 60) * 60
+
+        this.handleSliderInput = value => this.setState({
+            value,
+            seconds: getSeconds(value),
+            remaining: getSeconds(value),
+            countdown: false
+        })
+
+        this.handleSliderSet = value => {
+            let seconds = getSeconds(value)
+
+            this.setState({
+                seconds,
+                remaining: seconds,
+                value: Math.round(value * 60) / 60,
+                countdown: seconds != 0
+            })
+
+            localStorage.seconds = seconds
+        }
+
+        this.handleSliderClick = () => this.setState({
+            countdown: !this.state.countdown
         })
     }
 
@@ -56,17 +83,16 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            value: 0,
-            seconds: 0,
-            remaining: 0,
-            countdown: false,
-            alwaysOnTop: localStorage.alwaysOnTop == 'true'
-        })
-
         ipcRenderer
         .on('menu-close', () => this.window.close())
         .on('menu-toggle-alwaysontop', () => this.setState(prev => ({alwaysOnTop: !prev.alwaysOnTop})))
+
+        this.window.on('move', () => {
+            let [x, y] = this.window.getPosition()
+
+            localStorage.windowLeft = x
+            localStorage.windowTop = y
+        })
 
         this.animateTimer(+localStorage.seconds)
         this.window.setPosition(+localStorage.windowLeft, +localStorage.windowTop)
@@ -97,7 +123,6 @@ class App extends Component {
     render(_, state) {
         let minutes = Math.floor(state.remaining / 60)
         let endDate = new Date(Date.now() + state.remaining * 1000)
-        let getSeconds = value => Math.round(value * 60) * 60
 
         return h('div', {id: 'root'},
             h(TitleBar, {},
@@ -118,29 +143,9 @@ class App extends Component {
                 maxValue: 16.65, // 999 minutes
                 activated: state.countdown,
 
-                onInput: value => this.setState({
-                    value,
-                    seconds: getSeconds(value),
-                    remaining: getSeconds(value),
-                    countdown: false
-                }),
-
-                onSet: value => {
-                    let seconds = getSeconds(value)
-
-                    this.setState({
-                        seconds,
-                        remaining: seconds,
-                        value: Math.round(value * 60) / 60,
-                        countdown: seconds != 0
-                    })
-
-                    localStorage.seconds = seconds
-                },
-
-                onClick: () => this.setState({
-                    countdown: !this.state.countdown
-                })
+                onInput: this.handleSliderInput,
+                onSet: this.handleSliderSet,
+                onClick: this.handleSliderClick
             },
                 h(TimerDisplay, {
                     time: endDate,

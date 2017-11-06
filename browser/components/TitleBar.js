@@ -38,11 +38,15 @@ class TitleBar extends Component {
 
             this.window.setPosition(wx + dx, wy + dy)
         })
+
+        this.handleCloseButtonClick = () => {
+            this.window.close()
+        }
     }
 
     render() {
         return h('header', {},
-            h('span', {class: 'close', title: 'Close', onClick: () => this.window.close()},
+            h('span', {class: 'close', title: 'Close', onClick: this.handleCloseButtonClick},
                 h('img', {
                     src: 'img/close.svg',
                     width: 10,
