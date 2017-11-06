@@ -17,7 +17,7 @@ app.on('ready', () => {
         show: false
     })
 
-    // window.toggleDevTools()
+    // window.webContents.openDevTools({mode: 'detach'})
 
     window
     .on('closed', () => window = null)
