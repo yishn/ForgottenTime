@@ -33,6 +33,7 @@
     }
   },
   "scripts": {
+    "start": "electron .",
     "build": "build --dir",
     "dist:win": "build -w --ia32",
     "dist:linux": "build -l --ia32 --x64"
