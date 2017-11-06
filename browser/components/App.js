@@ -13,6 +13,7 @@ class App extends Component {
         this.window = remote.getCurrentWindow()
 
         this.state = {
+            now: Date.now(),
             value: 0,
             seconds: 0,
             remaining: 0,
@@ -77,9 +78,34 @@ class App extends Component {
         updateFrame()
     }
 
-    componentWillUpdate(_, nextState) {
-        this.window.setAlwaysOnTop(nextState.alwaysOnTop)
-        localStorage.alwaysOnTop = nextState.alwaysOnTop
+    componentDidUpdate(_, prevState) {
+        this.window.setAlwaysOnTop(this.state.alwaysOnTop)
+        localStorage.alwaysOnTop = this.state.alwaysOnTop
+
+        if (this.state.countdown && !prevState.countdown) {
+            this.countdownInterval = setInterval(() => {
+                let {countdown, remaining, seconds} = this.state
+
+                if (remaining <= 1) {
+                    this.window.setProgressBar(0)
+                    this.setState({remaining: 0, value: 0, countdown: false})
+
+                    if (countdown) this.countdownEnded()
+                    return
+                }
+
+                if (countdown) {
+                    this.window.setProgressBar(seconds == 0 ? 0 : remaining / seconds)
+
+                    this.setState({
+                        remaining: remaining - 1,
+                        value: (remaining - 1) / (60 * 60)
+                    })
+                }
+            }, 1000)
+        } else if (!this.state.countdown) {
+            clearInterval(this.countdownInterval)
+        }
     }
 
     componentDidMount() {
@@ -97,27 +123,6 @@ class App extends Component {
         this.animateTimer(+localStorage.seconds)
         this.window.setPosition(+localStorage.windowLeft, +localStorage.windowTop)
         this.window.show()
-
-        setInterval(() => {
-            let {countdown, remaining, seconds} = this.state
-
-            if (remaining <= 1) {
-                this.window.setProgressBar(0)
-                this.setState({remaining: 0, value: 0, countdown: false})
-
-                if (countdown) this.countdownEnded()
-                return
-            }
-
-            if (!countdown) return
-
-            this.window.setProgressBar(seconds == 0 ? 0 : remaining / seconds)
-
-            this.setState({
-                remaining: remaining - 1,
-                value: (remaining - 1) / (60 * 60)
-            })
-        }, 1000)
     }
 
     render(_, state) {
@@ -147,11 +152,7 @@ class App extends Component {
                 onSet: this.handleSliderSet,
                 onClick: this.handleSliderClick
             },
-                h(TimerDisplay, {
-                    time: endDate,
-                    minutes,
-                    seconds: state.remaining - minutes * 60
-                })
+                h(TimerDisplay, {remaining: state.remaining})
             )
         )
     }
