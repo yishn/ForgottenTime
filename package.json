@@ -23,25 +23,25 @@
     "appId": "de.yichuanshen.forgottentime",
     "compression": "maximum",
     "nsis": {
-        "oneClick": false,
-        "perMachine": true,
-        "allowToChangeInstallationDirectory": true,
-        "artifactName": "forgottentime-v${version}-win-setup.${ext}"
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "forgottentime-v${version}-win-setup.${ext}"
     },
     "linux": {
-        "category": "Utility"
+      "category": "Utility"
     }
   },
   "scripts": {
-    "pack": "build --dir",
+    "build": "build --dir",
     "dist:win": "build -w --ia32",
     "dist:linux": "build -l --ia32 --x64"
   },
   "devDependencies": {
-    "electron": "1.4.15",
-    "electron-builder": "^13.6.0"
+    "electron": "1.7.9",
+    "electron-builder": "^13.11.1"
   },
   "dependencies": {
-    "preact": "^7.2.0"
+    "preact": "^7.2.1"
   }
 }

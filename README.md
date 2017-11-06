@@ -24,7 +24,7 @@ $ npm install
 You can build using:
 
 ~~~
-$ npm run pack
+$ npm run build
 ~~~
 
 To create installers, use:
