@@ -14,6 +14,5 @@
     <circle cx="128" cy="128" r="80" fill="#338AF4" mask="url(#mask)" />
     <polygon transform="rotate(130 128 128)" fill="#338AF4" points="128,38 113,58 142,58" />
     <circle cx="128" cy="128" r="72" fill="url(#inner-gradient)" />
-    <text x="128" y="100" font-family="Segoe UI" font-size="20" text-anchor="middle" fill="rgb(209, 129, 70)" style="text-shadow: 0 0 3px rgba(209, 129, 70, .3);">16:12</text>
-    <text x="135" y="145" font-family="Segoe UI" font-size="60" text-anchor="middle" dominant-baseline="middle" fill="white" style="text-shadow: 0 0 3px rgba(255, 255, 255, .3);">22'</text>
+    <text x="135" y="135" font-family="Segoe UI" font-size="70" text-anchor="middle" dominant-baseline="middle" fill="white" style="text-shadow: 0 0 3px rgba(255, 255, 255, .3);">23'</text>
 </svg>
