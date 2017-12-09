@@ -1,4 +1,5 @@
 const {remote, ipcRenderer} = require('electron')
+const {dialog} = remote
 const {h, Component} = require('preact')
 
 const MenuItem = Component
@@ -49,9 +50,20 @@ class App extends Component {
     }
 
     countdownEnded() {
-        new Notification('ForgottenTime', {body: "It's time!"})
+        let result = dialog.showMessageBox(this.window, {
+            type: 'info',
+            message: "It's time!",
+            buttons: ['Repeat', 'Dismiss'],
+            defaultId: 1,
+            cancelId: 1
+        })
 
         this.animateTimer(this.state.seconds)
+        .then(() => {
+            if (result === 0) {
+                this.setState({countdown: true})
+            }
+        })
     }
 
     animateTimer(to, duration = 700, fps = 60, easing = null) {
@@ -59,23 +71,27 @@ class App extends Component {
 
         let from = this.state.remaining
         let fpms = fps / 1000
+        let tick = Math.round(1 / fpms)
         let n = Math.round(duration * fpms)
         let i = 0
 
         this.setState({seconds: to})
 
-        let updateFrame = () => {
-            let seconds = Math.round(from + easing(i / n) * (to - from))
+        return new Promise(resolve => {
+            let updateFrame = () => {
+                let seconds = Math.round(from + easing(i / n) * (to - from))
 
-            this.setState({
-                value: seconds / (60 * 60),
-                remaining: seconds
-            })
+                this.setState({
+                    value: seconds / (60 * 60),
+                    remaining: seconds
+                })
 
-            if (++i <= n) setTimeout(updateFrame, Math.round(1 / fpms))
-        }
+                if (++i <= n) setTimeout(updateFrame, tick)
+                else resolve()
+            }
 
-        updateFrame()
+            updateFrame()
+        })
     }
 
     componentDidUpdate(_, prevState) {
@@ -88,9 +104,11 @@ class App extends Component {
 
                 if (remaining <= 1) {
                     this.window.setProgressBar(0)
-                    this.setState({remaining: 0, value: 0, countdown: false})
+                    
+                    this.setState({remaining: 0, value: 0, countdown: false}, () => {
+                        if (countdown) this.countdownEnded()
+                    })
 
-                    if (countdown) this.countdownEnded()
                     return
                 }
 
