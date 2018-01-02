@@ -14,7 +14,6 @@ class App extends Component {
         this.window = remote.getCurrentWindow()
 
         this.state = {
-            now: Date.now(),
             value: 0,
             seconds: 0,
             remaining: 0,
@@ -54,7 +53,7 @@ class App extends Component {
             type: 'info',
             message: "It's time!",
             buttons: ['Repeat', 'Snooze', 'Dismiss'],
-            defaultId: 2,
+            defaultId: 1,
             cancelId: 2
         })
 
