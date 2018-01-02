@@ -106,7 +106,7 @@ class App extends Component {
                     this.window.setProgressBar(0)
 
                     this.setState({remaining: 0, value: 0, countdown: false}, () => {
-                        if (countdown) this.countdownEnded()
+                        if (countdown) setTimeout(() => this.countdownEnded(), 0)
                     })
 
                     return
