@@ -52,12 +52,12 @@ class App extends Component {
         let result = dialog.showMessageBox(this.window, {
             type: 'info',
             message: "It's time!",
-            buttons: ['Repeat', 'Snooze', 'Dismiss'],
-            defaultId: 1,
+            buttons: ['Snooze', 'Repeat', 'Dismiss'],
+            defaultId: 0,
             cancelId: 2
         })
 
-        await this.animateTimer(result === 1 ? +localStorage.snoozeSeconds : +localStorage.seconds)
+        await this.animateTimer(result === 0 ? +localStorage.snoozeSeconds : +localStorage.seconds)
 
         if (result !== 2) {
             this.setState({countdown: true})
