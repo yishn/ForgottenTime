@@ -7,7 +7,7 @@ app.on('window-all-closed', () => app.quit())
 app.on('ready', () => {
     window = new BrowserWindow({
         icon: process.platform == 'linux' ? `${__dirname}/build/logo.png` : null,
-        title: 'ForgottenTime',
+        title: app.getName(),
         width: 150,
         height: 150,
         useContentSize: true,
