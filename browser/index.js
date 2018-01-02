@@ -10,6 +10,7 @@ let setDefaultSetting = (name, value) => {
 let {workAreaSize} = electron.screen.getPrimaryDisplay()
 
 setDefaultSetting('alwaysOnTop', true)
+setDefaultSetting('snoozeSeconds', 5 * 60)
 setDefaultSetting('seconds', 0)
 setDefaultSetting('windowLeft', Math.round(workAreaSize.width / 2) - 75)
 setDefaultSetting('windowTop', Math.round(workAreaSize.height / 2) - 75)

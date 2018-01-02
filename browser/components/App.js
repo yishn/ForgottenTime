@@ -49,24 +49,23 @@ class App extends Component {
         })
     }
 
-    countdownEnded() {
+    async countdownEnded() {
         let result = dialog.showMessageBox(this.window, {
             type: 'info',
             message: "It's time!",
-            buttons: ['Repeat', 'Dismiss'],
-            defaultId: 1,
-            cancelId: 1
+            buttons: ['Repeat', 'Snooze', 'Dismiss'],
+            defaultId: 2,
+            cancelId: 2
         })
 
-        this.animateTimer(this.state.seconds)
-        .then(() => {
-            if (result === 0) {
-                this.setState({countdown: true})
-            }
-        })
+        await this.animateTimer(result === 1 ? +localStorage.snoozeSeconds : +localStorage.seconds)
+
+        if (result !== 2) {
+            this.setState({countdown: true})
+        }
     }
 
-    animateTimer(to, duration = 700, fps = 60, easing = null) {
+    async animateTimer(to, duration = 700, fps = 60, easing = null) {
         if (!easing) easing = t => 0.5 * Math.sin((t - 0.5) * Math.PI) + 0.5
 
         let from = this.state.remaining
@@ -95,8 +94,10 @@ class App extends Component {
     }
 
     componentDidUpdate(_, prevState) {
-        this.window.setAlwaysOnTop(this.state.alwaysOnTop)
-        localStorage.alwaysOnTop = this.state.alwaysOnTop
+        if (this.state.alwaysOnTop !== prevState.alwaysOnTop) {
+            this.window.setAlwaysOnTop(this.state.alwaysOnTop)
+            localStorage.alwaysOnTop = this.state.alwaysOnTop
+        }
 
         if (this.state.countdown && !prevState.countdown) {
             this.countdownInterval = setInterval(() => {
@@ -104,7 +105,7 @@ class App extends Component {
 
                 if (remaining <= 1) {
                     this.window.setProgressBar(0)
-                    
+
                     this.setState({remaining: 0, value: 0, countdown: false}, () => {
                         if (countdown) this.countdownEnded()
                     })
@@ -144,9 +145,6 @@ class App extends Component {
     }
 
     render(_, state) {
-        let minutes = Math.floor(state.remaining / 60)
-        let endDate = new Date(Date.now() + state.remaining * 1000)
-
         return h('div', {id: 'root'},
             h(TitleBar, {},
                 h(MenuItem, {
@@ -161,15 +159,17 @@ class App extends Component {
                 })
             ),
 
-            h(RadialSlider, {
-                value: state.value,
-                maxValue: 16.65, // 999 minutes
-                activated: state.countdown,
+            h(RadialSlider,
+                {
+                    value: state.value,
+                    maxValue: 16.65, // 999 minutes
+                    activated: state.countdown,
 
-                onInput: this.handleSliderInput,
-                onSet: this.handleSliderSet,
-                onClick: this.handleSliderClick
-            },
+                    onInput: this.handleSliderInput,
+                    onSet: this.handleSliderSet,
+                    onClick: this.handleSliderClick
+                },
+
                 h(TimerDisplay, {remaining: state.remaining})
             )
         )

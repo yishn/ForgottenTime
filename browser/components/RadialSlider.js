@@ -69,10 +69,12 @@ class RadialSlider extends Component {
                 h('circle', {cx: 68, cy: 68, r: 60, fill: '#338AF4', mask: 'url(#mask)'})
             ),
 
-            h('div', {
-                class: 'indicator',
-                style: {transform: `rotate(${angle(value)}deg)`}
-            },
+            h('div',
+                {
+                    class: 'indicator',
+                    style: {transform: `rotate(${angle(value)}deg)`}
+                },
+                
                 h('span', {onMouseDown: this.indicatorMouseDownHandler.bind(this)})
             ),
 
