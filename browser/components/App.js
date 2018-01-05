@@ -18,7 +18,7 @@ class App extends Component {
             seconds: 0,
             remaining: 0,
             countdown: false,
-            alwaysOnTop: localStorage.alwaysOnTop == 'true'
+            alwaysOnTop: localStorage.alwaysOnTop === 'true'
         }
 
         let getSeconds = value => Math.round(value * 60) * 60
@@ -92,7 +92,7 @@ class App extends Component {
         })
     }
 
-    componentDidUpdate(_, prevState) {
+    componentDidUpdate(_, prevState = {}) {
         if (this.state.alwaysOnTop !== prevState.alwaysOnTop) {
             this.window.setAlwaysOnTop(this.state.alwaysOnTop)
             localStorage.alwaysOnTop = this.state.alwaysOnTop
@@ -141,6 +141,8 @@ class App extends Component {
         this.animateTimer(+localStorage.seconds)
         this.window.setPosition(+localStorage.windowLeft, +localStorage.windowTop)
         this.window.show()
+
+        this.componentDidUpdate()
     }
 
     render(_, state) {
