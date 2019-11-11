@@ -35,7 +35,12 @@ class TitleBar extends Component {
             let [[mx, my], [wx, wy]] = this.mouseDownPos
             let [dx, dy] = [x - mx, y - my]
 
-            this.window.setPosition(wx + dx, wy + dy)
+            this.window.setBounds({
+                x: wx + dx,
+                y: wy + dy,
+                width: 150,
+                height: 150
+            })
         })
 
         this.handleCloseButtonClick = () => {
