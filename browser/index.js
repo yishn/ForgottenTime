@@ -7,7 +7,7 @@ let setDefaultSetting = (name, value) => {
         localStorage[name] = value
 }
 
-let {workAreaSize} = electron.screen.getPrimaryDisplay()
+let {workAreaSize} = electron.remote.screen.getPrimaryDisplay()
 
 setDefaultSetting('alwaysOnTop', true)
 setDefaultSetting('snoozeSeconds', 5 * 60)

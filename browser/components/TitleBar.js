@@ -1,5 +1,5 @@
-const {remote, ipcRenderer, screen: s} = require('electron')
-const {Menu} = require('electron').remote
+const {remote} = require('electron')
+const {Menu} = remote
 const {h, Component} = require('preact')
 
 class TitleBar extends Component {
@@ -13,26 +13,25 @@ class TitleBar extends Component {
             if (evt.button != 0) return
             if (evt.target.tagName != 'svg') return
 
-            let {x, y} = s.getCursorScreenPoint()
+            let {screenX: x, screenY: y} = evt
             this.mouseDownPos = [[x, y], this.window.getPosition()]
         })
 
         document.addEventListener('mouseup', evt => {
-            if (evt.button != 0) return
-            this.mouseDownPos = null
-        })
+            if (evt.button === 0) {
+                this.mouseDownPos = null
+            } else if (evt.button === 2) {
+                let template = this.props.children.map(x => x.props)
+                let menu = Menu.buildFromTemplate(template)
 
-        document.addEventListener('mouseup', evt => {
-            if (evt.button != 2) return
-
-            let template = this.props.children.map(x => x.attributes)
-            ipcRenderer.send('show-context-menu', template, this.window)
+                menu.popup()
+            }
         })
 
         document.addEventListener('mousemove', evt => {
             if (!this.mouseDownPos) return
 
-            let {x, y} = s.getCursorScreenPoint()
+            let {screenX: x, screenY: y} = evt
             let [[mx, my], [wx, wy]] = this.mouseDownPos
             let [dx, dy] = [x - mx, y - my]
 

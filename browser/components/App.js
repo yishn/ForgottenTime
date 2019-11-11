@@ -1,4 +1,4 @@
-const {remote, ipcRenderer} = require('electron')
+const {remote} = require('electron')
 const {dialog} = remote
 const {h, Component} = require('preact')
 
@@ -127,10 +127,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        ipcRenderer
-        .on('menu-close', () => this.window.close())
-        .on('menu-toggle-alwaysontop', () => this.setState(prev => ({alwaysOnTop: !prev.alwaysOnTop})))
-
         this.window.on('move', () => {
             let [x, y] = this.window.getPosition()
 
@@ -152,11 +148,11 @@ class App extends Component {
                     label: 'Always On Top',
                     type: 'checkbox',
                     checked: state.alwaysOnTop,
-                    action: 'toggle-alwaysontop'
+                    click: () => this.setState(prev => ({alwaysOnTop: !prev.alwaysOnTop}))
                 }),
                 h(MenuItem, {
                     label: 'Close',
-                    action: 'close'
+                    click: () => this.window.close()
                 })
             ),
 
