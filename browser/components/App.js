@@ -49,7 +49,7 @@ class App extends Component {
     }
 
     async countdownEnded() {
-        let result = dialog.showMessageBox(this.window, {
+        let result = dialog.showMessageBoxSync(this.window, {
             type: 'info',
             message: "It’s time!",
             buttons: ['Snooze', 'Repeat', 'Dismiss'],

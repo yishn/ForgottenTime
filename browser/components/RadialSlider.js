@@ -57,7 +57,7 @@ class RadialSlider extends Component {
     render({value, minValue = 0, maxValue = Infinity, activated, onClick = () => {}}) {
         value = cap(minValue, maxValue, value)
 
-        return h('div', {class: {'radial-slider': true, activated}},
+        return h('div', {class: `radial-slider ${activated ? 'activated' : ''}`},
             h('svg', {width: 138, height: 138},
                 h('defs', {},
                     h('mask', {id: 'mask'},
@@ -74,7 +74,7 @@ class RadialSlider extends Component {
                     class: 'indicator',
                     style: {transform: `rotate(${angle(value)}deg)`}
                 },
-                
+
                 h('span', {onMouseDown: this.indicatorMouseDownHandler.bind(this)})
             ),
 

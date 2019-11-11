@@ -34,15 +34,15 @@
   },
   "scripts": {
     "start": "electron .",
-    "build": "build --dir",
-    "dist:win": "build -w --ia32",
-    "dist:linux": "build -l --ia32 --x64"
+    "build": "electron-builder --dir",
+    "dist:win": "electron-builder -w --ia32",
+    "dist:linux": "electron-builder -l --ia32 --x64"
   },
   "devDependencies": {
-    "electron": "1.7.9",
-    "electron-builder": "^13.11.1"
+    "electron": "^7.1.1",
+    "electron-builder": "^22.1.0"
   },
   "dependencies": {
-    "preact": "^7.2.1"
+    "preact": "^10.0.5"
   }
 }
